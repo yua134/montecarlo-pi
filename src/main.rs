@@ -2,12 +2,12 @@ use std::{arch::x86_64::*, sync::atomic::AtomicUsize, time::Instant};
 
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
-const MAX: usize = 2_500_000_000;
-const CORES: usize = 13;
+const MAX: usize = 150_000_000;
 
 fn main() {
     let start = Instant::now();
-    let (pi, count, total) = pi();
+    let cores = num_cpus::get() - 1;
+    let (pi, count, total) = pi(cores);
     let duration = Instant::now() - start;
     println!(
         "interior:{:?} total:{:?} pi:{:?} time: {:?}",
@@ -16,9 +16,9 @@ fn main() {
 }
 
 #[inline(always)]
-fn pi() -> (f64, usize, usize) {
+fn pi(cores: usize) -> (f64, usize, usize) {
     let count = AtomicUsize::new(0);
-    (0..CORES).into_par_iter().for_each(|_| unsafe {
+    (0..cores).into_par_iter().for_each(|_| unsafe {
         let seed = rand::random::<u64>();
         let mut rng = Xoroshiro128PlusPlusSimd::from_seed(seed);
         let mut c = 0;
@@ -40,7 +40,7 @@ fn pi() -> (f64, usize, usize) {
         count.fetch_add(c, std::sync::atomic::Ordering::Release);
     });
     let counts = count.load(std::sync::atomic::Ordering::Acquire);
-    let total = MAX * CORES * 8;
+    let total = MAX * cores * 8;
     (counts as f64 * 4.0 / total as f64, counts, total)
 }
 
