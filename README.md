@@ -33,7 +33,7 @@ The number of trials is defined as a constant in the source code.
 If you want to change it, edit the value of the constant in `src/main.rs`:
 
 ```rust
-const MAX: usize = 150_000_000;
+const MAX: usize = 2_500_000_000;
 ```
 
 For example, to run with 10 million trials:
