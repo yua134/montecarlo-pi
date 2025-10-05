@@ -24,7 +24,7 @@ cargo build --release
 
 Example output:
 ```
-interior:12252232494 total:15600000000 pi:3.1415980753846156 time: 13.7243841s
+interior:204203538220 total:260000000000 pi:3.1415928956923076 time: 14.5927911s
 ```
 Tested on: Windows 11, Intel Core ultra5-125U
 
