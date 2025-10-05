@@ -5,7 +5,6 @@ This implementation is **CPU-only**, optimized with **AVX2 SIMD intrinsics** via
 **Note:** This project is limited to **x86_64 CPUs with AVX2 support**. No fallback implementation is provided.
 
 ## Features
-- Pure Rust implementation with no external dependencies  
 - Optimized using **AVX2 vectorization** for maximum throughput
 - Multi-threaded execution across CPU cores
 - Designed specifically for **π estimation** via Monte Carlo sampling
